@@ -10,12 +10,8 @@ struct intl_passenger {
     char passport_id[MAX_LENGTH];
     char country[MAX_LENGTH];
 };
-typedef struct intl_passenger *passenger;
 
-FILE read(const char *path) {
-    FILE *fptr = fopen(path, "r");
-    return *fptr;
-}
+typedef struct intl_passenger *passenger;
 
 void* cpy_elm(void *data) {
     passenger res = (passenger) malloc(sizeof(struct intl_passenger));
@@ -59,20 +55,23 @@ void check(){
     free_elm(temp1);
 }
 
-
-int main() {
-
-    Stack new_stack = init(56, cpy_elm, free_elm, label_elm);
-    FILE *fptr = fopen("international_passengers.dat", "r");
-    passenger temp;
+void fill_stack(Stack stack, const char* path){
+    FILE *fptr = fopen(path, "r");
+    passenger temp = malloc(sizeof(struct intl_passenger));
     size_t len;
     while ((len = (size_t) fscanf(fptr, "%s %s %s %s", temp->given_name, temp->surname, temp->passport_id, temp->country)) != EOF) {
-        push(new_stack, temp);
+        push(stack, temp);
         }
+    fclose(fptr);
+    free(temp);
+}
+
+
+int main() {
+    Stack new_stack = init(56, cpy_elm, free_elm, label_elm);
+    fill_stack(new_stack, "international_passengers.dat"); 
     printf("-------STACK TEST FOR PASSENGERS DATA---------\n\n");
     print(new_stack);
-    fclose(fptr);
-    clear(new_stack);
-    destroy(new_stack);
+    
     return 0;
 }
