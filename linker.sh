@@ -6,7 +6,7 @@ if [[ $# -ne 1 ]]; then
 fi
 
 gcc -Wall -c $file      #complie only one single file with -c flag it will produce an object file: $file.o
-gcc -Wall -o linked *.o #link each .o file to an executable 'linked.o"
+gcc -Wall -o linked *.o #link each .o file to an executable 'linked"
 ./linked                #run it :)
 
 echo -e "\n in case of segmentation fault or SIGSEGV please google and use GDB debuger\n"
